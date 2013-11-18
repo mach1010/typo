@@ -116,4 +116,6 @@ Rails.application.routes.draw do
   root :to  => 'articles#index', :format => false
 
   match '*from', :to => 'articles#redirect', :format => false
+
+  post 'articles/admin/content/edit/:id' => 'articles#merge', :as => :merge
 end
