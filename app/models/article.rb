@@ -71,6 +71,30 @@ class Article < Content
     end
   end
 
+
+
+  def self.merge!(winner_id, loser_id)
+    
+    winner = find_by_id winner_id 
+    loser  = find_by_id loser_id 
+    
+    winner.body = winner.body.concat loser.body
+    win_save = winner.save
+    
+    loser.feedback.compact.map do |comment| 
+      comment.article_id = winner.id
+      comment.save
+    end
+     
+    lose_save = loser.save
+    p "win_save, lose_save", win_save, lose_save
+    return winner
+  end
+
+
+
+
+
   def set_permalink
     return if self.state == 'draft'
     self.permalink = self.title.to_permalink if self.permalink.nil? or self.permalink.empty?

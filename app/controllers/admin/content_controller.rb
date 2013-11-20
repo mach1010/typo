@@ -21,6 +21,8 @@ class Admin::ContentController < Admin::BaseController
     #end
     
     @article = Article.merge!( win_id, lose_id)
+    
+    p "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ article:", article
     redirect_to admin_content_path
   end
 
