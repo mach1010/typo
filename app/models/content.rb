@@ -11,6 +11,30 @@ class Content < ActiveRecord::Base
   has_many :redirections
   has_many :redirects, :through => :redirections, :dependent => :destroy
 
+
+
+
+  def self.merge!(winner_id, loser_id)
+    
+    winner = find_by_id winner_id 
+    loser  = find_by_id loser_id 
+    
+    winner.body = winner.body.concat loser.body
+    win_save = winner.save
+    
+    loser.feedback.compact.map do |comment| 
+      comment.article_id = winner.id
+      comment.save
+    end
+     
+    lose_save = loser.save
+    p "win_save, lose_save", win_save, lose_save
+    return winner
+  end
+  
+  
+  
+  
   def notify_users=(collection)
     return notify_users.clear if collection.empty?
     self.class.transaction do

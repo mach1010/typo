@@ -6,14 +6,27 @@ class Admin::ContentController < Admin::BaseController
 
   cache_sweeper :blog_sweeper
 
+
+
+
+
   def merge
-    p params
-    @articles = Article.all
-    @article = @articles.first
+
+    win_id = params['merge_boss']
+    lose_id  = params['merge_with']
     
+    #unless Content.find_by_id(win_id).access_by?(current_user) && Content.find_by_id(lose_id).access_by?(current_user)
+    #  flash[:error] = _("Error, you are not allowed to perform this action")
+    #  return(redirect_to :action => 'index')
+    #end
     
+    @article = Content.merge!( win_id, lose_id)
     redirect_to admin_content_path
   end
+
+
+
+
 
   def auto_complete_for_article_keywords
     @items = Tag.find_with_char params[:article][:keywords].strip
