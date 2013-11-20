@@ -7,7 +7,11 @@ class Admin::ContentController < Admin::BaseController
   cache_sweeper :blog_sweeper
 
   def merge
+    p params
     @articles = Article.all
+    @article = @articles.first
+    
+    
     redirect_to admin_content_path
   end
 

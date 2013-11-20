@@ -1,0 +1,27 @@
+<h3> Merge Articles </h3>
+<div class='merge_form'>
+  <%= form_tag({controller: "content", action: "merge"}, method: "post", class: "merge_form") %>
+  <%= error_messages_for 'merge' %>
+  <div class='clearfix'>
+    <label for="article_id"><%= _("Article ID") %></label>
+    <div class='input'>
+    
+    
+    
+    
+<%# Use :article_:id in case has framework use or validation %>
+<%# text_field overwrites values immediately after from hash %>
+<%# hidden_field lets :value be :article[:value] which == @article.id %>
+      
+      <%= text_field :article, :id, {:id => 'merge_with', :name => 'merge_with', :value => ''} %>
+      <%= hidden_field :article, :id, {:id => 'merge_boss', :name => 'merge_boss'} %>
+    
+
+
+
+    </div>
+  </div>
+  <div class='action'>
+    <%= submit_tag "Merge" %>  
+  </div>
+</div>
