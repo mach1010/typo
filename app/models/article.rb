@@ -120,28 +120,7 @@ class Article < Content
       eval(list_function.join('.'))
     end
 
-  end
-
-
-  def merge(winner_id, loser_id)
-    
-    winner = find_by_id winner_id 
-    loser  = find_by_id loser_id 
-    
-    winner.body = winner.body.concat loser.body
-    win_save = winner.save
-    
-    loser.feedback.compact.map do |comment| 
-      comment.article_id = winner.id
-      comment.save
-    end
-     
-    lose_save = loser.save
-    p "win_save, lose_save", win_save, lose_save
-    return winner
-  end
-  
-  
+  end  
 
   def year_url
     published_at.year.to_s

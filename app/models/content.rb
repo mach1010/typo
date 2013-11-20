@@ -16,8 +16,8 @@ class Content < ActiveRecord::Base
 
   def self.merge!(winner_id, loser_id)
     
-    winner = find_by_id winner_id 
-    loser  = find_by_id loser_id 
+    winner = Content.find_by_id winner_id 
+    loser  = Content.find_by_id loser_id 
     
     winner.body = winner.body.concat loser.body
     win_save = winner.save

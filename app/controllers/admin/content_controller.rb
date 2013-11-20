@@ -20,7 +20,7 @@ class Admin::ContentController < Admin::BaseController
     #  return(redirect_to :action => 'index')
     #end
     
-    @article = Content.merge!( win_id, lose_id)
+    @article = Article.merge!( win_id, lose_id)
     redirect_to admin_content_path
   end
 
