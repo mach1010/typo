@@ -1,5 +1,6 @@
 require 'set'
 require 'uri'
+require 'cgi'
 
 class Content < ActiveRecord::Base
   belongs_to :text_filter
@@ -13,25 +14,26 @@ class Content < ActiveRecord::Base
 
 
 
-=begin
   def self.merge!(winner_id, loser_id)
     
     winner = Article.find_by_id winner_id 
     loser  = Article.find_by_id loser_id 
-    
-    winner.body = winner.body.concat loser.body
-    win_save = winner.save
-    
+
+	#TODO 2 strip html entirely? what are their text_filters
+    winner.body = winner.body+"\n" + loser.body
+    win_save = winner.save!
+        
     loser.feedback.compact.map do |comment| 
       comment.article_id = winner.id
-      comment.save
+      comment.save!
     end
-     
-    lose_save = loser.save
-    p "win_save, lose_save", win_save, lose_save
+    #TODO 1 pmc It would be better to just change state val not destroy.
+    lose_destroy = Article.destroy( loser_id )
+    
+    p "win_save, lose_destroy", win_save, lose_destroy
     return winner
   end
-=end  
+ 
   
   
   

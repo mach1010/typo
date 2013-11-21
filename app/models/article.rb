@@ -71,27 +71,31 @@ class Article < Content
     end
   end
 
+=begin
 
-
+  def merge!(loser_id)
+    return Article.merge!( self.id, loser_id)
+  end
+  
   def self.merge!(winner_id, loser_id)
     
     winner = find_by_id winner_id 
     loser  = find_by_id loser_id 
     
     winner.body = winner.body.concat loser.body
-    win_save = winner.save
+    win_save = winner.save!
     
     loser.feedback.compact.map do |comment| 
       comment.article_id = winner.id
-      comment.save
+      comment.save!
     end
      
-    lose_save = loser.save
+    lose_save = loser.save!
     p "win_save, lose_save", win_save, lose_save
     return winner
   end
 
-
+=end
 
 
 

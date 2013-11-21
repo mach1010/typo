@@ -14,15 +14,11 @@ class Admin::ContentController < Admin::BaseController
 
     win_id = params['merge_boss']
     lose_id  = params['merge_with']
-    
-    #unless Content.find_by_id(win_id).access_by?(current_user) && Content.find_by_id(lose_id).access_by?(current_user)
-    #  flash[:error] = _("Error, you are not allowed to perform this action")
-    #  return(redirect_to :action => 'index')
-    #end
-    
-    @article = Article.merge!( win_id, lose_id)
-    
-    p "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ article:", article
+    #TODO switch model back to article
+    @article = Content.merge!( win_id, lose_id)
+    #@article = Article.merge!( win_id, lose_id)
+    #@article = Article.find_by_id(win_id).merge!(lose_id)
+    p "$$$$$$$$$$$$$$$ money $$$$$$$$$$$$$$$$$ @article ", @article.inspect
     redirect_to admin_content_path
   end
 

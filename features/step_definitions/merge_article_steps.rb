@@ -11,16 +11,22 @@ Then /^I should see "(.*?)" and "(.*?)"$/ do |arg1, arg2|
     first = page.body.index(arg1)
     assert first > 0
     second = page.body.rindex(arg2)
-    assert second != first && second > (first + arg1.length) 
+    assert second > (first + arg1.length) 
   end
 
 end
 
 Given /^the following articles exist/ do |table|
-  Article.create!(table.hashes)
+  #arts = Content.create!(table.hashes)
+  #delete_all then assert Content.all.count == 3
+  already_there = Article.count
+  arts = Article.create!(table.hashes)
+  Article.count.should be > 0
+  table.hashes.length.should == (Article.count - already_there)
 end
 
 Given /^the following comments exist/ do |table|
-  # table is a Cucumber::Ast::Table
-  Comment.create!(table.hashes)
+  already_there = Comment.count
+  comments = Comment.create!(table.hashes)
+  table.hashes.length.should == (Comment.count - already_there)
 end
