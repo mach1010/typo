@@ -21,25 +21,3 @@ Then /^I should see "(.*?)" and "(.*?)"$/ do |arg1, arg2|
     assert second > (first + arg1.length) 
   end
 end
-
-=begin
-
-When /^I log out$/ do
-  click_link 
-  if page.respond_to? :should
-    page.should have_content('Successfully logged out')
-  else
-    assert page.has_content?('Successfully logged out')
-  end
-end
-
-Given /^I am looking at comments for "Foo"/ do
-  visit 'admin/feedback/article/3'
-end
-
-When /^I follow the comments link for "(.*)"/ do | title |
-  visit 'admin/feedback/article/3'
-  #assert there should be two comments
-end
-
-=end

@@ -61,37 +61,23 @@ class Article < Content
 
   setting :password,                   :string, ''
 
-  def merge_with(parent_article)
-    @parent_article = parent_article
-    @parent_article.body += self.body
+  def merge_with!(parent_article)
+    parent_article.body += self.body
     self.comments.each do |comment|
-      comment.article_id = @parent_article.id
+      comment.article_id = parent_article.id
       comment.save
     end
-    @parent_article.save!
+    parent_article.save!
     self.reload
     self.destroy
   end
 
-
-=begin
-  def self.merge!(winner_id, loser_id)
-    winner = Article.find_by_id winner_id 
-    loser  = Article.find_by_id loser_id 
-    p "winner, loser == ", winner, loser
-    loser.comments.each do |comment| 
-      comment.article_id = winner.id
-      comment.save!
-    end
-    winner.body = winner.body + loser.body
-    winner.save!
-    loser.destroy
-    winner = Article.find_by_id(winner_id)
-    p "winner is NOW:", winner
-    return winner
+  def self.merge!(parent_id, loser_id)
+    parent = find_by_id parent_id
+    loser = find_by_id loser_id
+    loser.merge_with!(parent)
   end
-=end  
-  
+
   def initialize(*args)
     super
     # Yes, this is weird - PDC

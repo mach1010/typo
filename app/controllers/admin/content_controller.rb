@@ -6,23 +6,14 @@ class Admin::ContentController < Admin::BaseController
 
   cache_sweeper :blog_sweeper
 
-
   def merge
-    @article = Article.find(session[:id])
-    @parent_article = Article.find(params[:merge_with])
-    @article.merge_with(@parent_article)
-    redirect_to admin_content_path
+    loser = Article.find_by_id params[:current_loser]
+    parent = Article.find_by_id params[:merge_with]
+    Article.merge! parent, loser
+    #loser.merge_with!(parent)
+    #@article = parent
+    redirect_to admin_content_path and return
   end
-
-
-  #def merge
-  #  p 'controller merge params boss, with', params['merge_boss'], params['merge_with']
-  #  @article = Article.merge!( params['merge_w'], params['merge_with'])
-  #  redirect_to admin_content_path
-  #end
-
-
-
 
   def auto_complete_for_article_keywords
     @items = Tag.find_with_char params[:article][:keywords].strip
