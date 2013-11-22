@@ -7,21 +7,19 @@ class Admin::ContentController < Admin::BaseController
   cache_sweeper :blog_sweeper
 
 
-
-
-
   def merge
-
-    win_id = params['merge_boss']
-    lose_id  = params['merge_with']
-    #TODO switch model back to article
-    @article = Content.merge!( win_id, lose_id)
-    #@article = Article.merge!( win_id, lose_id)
-    #@article = Article.find_by_id(win_id).merge!(lose_id)
-    p "$$$$$$$$$$$$$$$ money $$$$$$$$$$$$$$$$$ @article ", @article.inspect
+    @article = Article.find(session[:id])
+    @parent_article = Article.find(params[:merge_with])
+    @article.merge_with(@parent_article)
     redirect_to admin_content_path
   end
 
+
+  #def merge
+  #  p 'controller merge params boss, with', params['merge_boss'], params['merge_with']
+  #  @article = Article.merge!( params['merge_w'], params['merge_with'])
+  #  redirect_to admin_content_path
+  #end
 
 
 

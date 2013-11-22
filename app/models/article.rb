@@ -61,6 +61,37 @@ class Article < Content
 
   setting :password,                   :string, ''
 
+  def merge_with(parent_article)
+    @parent_article = parent_article
+    @parent_article.body += self.body
+    self.comments.each do |comment|
+      comment.article_id = @parent_article.id
+      comment.save
+    end
+    @parent_article.save!
+    self.reload
+    self.destroy
+  end
+
+
+=begin
+  def self.merge!(winner_id, loser_id)
+    winner = Article.find_by_id winner_id 
+    loser  = Article.find_by_id loser_id 
+    p "winner, loser == ", winner, loser
+    loser.comments.each do |comment| 
+      comment.article_id = winner.id
+      comment.save!
+    end
+    winner.body = winner.body + loser.body
+    winner.save!
+    loser.destroy
+    winner = Article.find_by_id(winner_id)
+    p "winner is NOW:", winner
+    return winner
+  end
+=end  
+  
   def initialize(*args)
     super
     # Yes, this is weird - PDC
@@ -70,34 +101,6 @@ class Article < Content
       self.settings = {}
     end
   end
-
-=begin
-
-  def merge!(loser_id)
-    return Article.merge!( self.id, loser_id)
-  end
-  
-  def self.merge!(winner_id, loser_id)
-    
-    winner = find_by_id winner_id 
-    loser  = find_by_id loser_id 
-    
-    winner.body = winner.body.concat loser.body
-    win_save = winner.save!
-    
-    loser.feedback.compact.map do |comment| 
-      comment.article_id = winner.id
-      comment.save!
-    end
-     
-    lose_save = loser.save!
-    p "win_save, lose_save", win_save, lose_save
-    return winner
-  end
-
-=end
-
-
 
   def set_permalink
     return if self.state == 'draft'
