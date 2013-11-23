@@ -2,31 +2,7 @@
 
 describe Admin::ContentController do
   render_views
-<<<<<<< HEAD
-  describe "merge features" do 
-    it "should call merge in content model" do
-      Content.should_receive(:merge).with(1,2)
-      post :merge, {:id => 1, :merge_with=>2}
-=======
-  
-  describe "merge features" do 
 
-    it "should call merge in content model" do
-      Factory(:article)
-      Article.should_receive(:merge).with(1)
-      post :merge, {:id => 1, :merge_with => 2}
->>>>>>> 276dd754ee84382354b445a984f4f4376783bdca
-    end
-    it "should pass id for article 1 and article 2"
-    it "should render admin content page"
-    it "should flash results were successful"
-<<<<<<< HEAD
-  end
-  
-=======
-    end  
-
->>>>>>> 276dd754ee84382354b445a984f4f4376783bdca
   # Like it's a shared, need call everywhere
   shared_examples_for 'index action' do
 
