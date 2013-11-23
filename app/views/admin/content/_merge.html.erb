@@ -5,9 +5,9 @@
   <div class='clearfix'>
     <div class='input'>
     
-      <label for="merge_with"><%= _("Article ID") %></label>    
-      <%= text_field :article, :id, {:id => 'merge_with', :name => 'merge_with'} %>
-      <%= hidden_field :article, :id, {:id => 'current_loser', :name => 'current_loser', :value => @article.id} %>
+      <label for='merge_with'><%= _("Article ID") %></label>    
+      <%= text_field_tag 'merge_with' %>
+      <%= hidden_field_tag 'current_loser', @article.id %>
       
     </div>
   </div>
@@ -15,3 +15,5 @@
     <%= submit_tag "Merge" %>
   </div>
 </div>
+
+

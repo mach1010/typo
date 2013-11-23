@@ -6,10 +6,10 @@ Feature: Write Articles
   Given the blog is set up
 
   And the following articles exist:
-  | id | title | body            | published | state     | allow_comments |
-  |  2 | Foo   | FFFFFF Foo body | t         | published | t              |
-  |  3 | Bar   | BBBBBB Bar body | t         | published | t              |
-  |  4 | Ted   | TTTTTT Ted body | t         | published | t              |
+  | id | title | body            | state     | allow_comments |
+  |  2 | Foo   | FFFFFF Foo body | published | t              |
+  |  3 | Bar   | BBBBBB Bar body | published | t              |
+  |  4 | Ted   | TTTTTT Ted body | published | t              |
   
   And the following comments exist:
   | id | article_id | body     | title        | author   |
