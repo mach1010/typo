@@ -7,11 +7,10 @@ class Admin::ContentController < Admin::BaseController
   cache_sweeper :blog_sweeper
 
   def merge
-    loser = Article.find_by_id params[:current_loser]
+    loser = Article.find_by_id params[:current_loser] # loser = :article ?
     parent = Article.find_by_id params[:merge_with]
-    Article.merge! parent, loser
-    #loser.merge_with!(parent)
-    #@article = parent
+    #Article.merge! parent, loser
+    loser.merge_with!(parent)
     redirect_to admin_content_path and return
   end
 
