@@ -21,3 +21,15 @@ Then /^I should see "(.*?)" and "(.*?)"$/ do |arg1, arg2|
     assert second > (first + arg1.length) 
   end
 end
+
+Given /^the following articles exist/ do |article_table|
+  Article.create!(article_table.hashes)
+end
+
+Given /^the following comments exist/ do |comment_table|
+  Comment.create!(comment_table.hashes)
+end
+
+When /^I log out/ do
+  visit '/accounts/logout/'
+end

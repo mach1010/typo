@@ -4,16 +4,12 @@
   <%= error_messages_for 'merge' %>
   <div class='clearfix'>
     <div class='input'>
-    
       <label for='merge_with'><%= _("Article ID") %></label>    
       <%= text_field_tag 'merge_with' %>
       <%= hidden_field :article, :id %>
-      
     </div>
   </div>
   <div class='action'>
     <%= submit_tag "Merge" %>
   </div>
 </div>
-
-

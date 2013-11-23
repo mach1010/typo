@@ -1,10 +1,20 @@
 require 'base64'
 
+
 module Admin; end
 class Admin::ContentController < Admin::BaseController
   layout "administration", :except => [:show, :autosave]
 
   cache_sweeper :blog_sweeper
+  
+=begin  
+  def merge
+    @article = Article.find(session[:id])
+    @parent_article = Article.find(params[:merge_with])
+    @article.merge_with(@parent_article)
+    redirect_to admin_content_path
+  end
+=end
 
   def merge
     loser = Article.find_by_id params[:article][:id]

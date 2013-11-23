@@ -8,12 +8,15 @@ module NavigationHelpers
       
     when /^the new article page$/
       '/admin/content/new'
-      
+     
     when /^the view page for "(.*)"/
       "/admin/content/edit/#{Article.find_by_title($1).id}"
       
     #when /^the logout link/
     #  "Log out »" #Brittle
+
+    when /^the view page for "(.*)"/
+      "/admin/content/edit/#{Article.find_by_title($1).id}"  
 
     else
       begin

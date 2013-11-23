@@ -72,11 +72,12 @@ class Article < Content
     self.destroy
   end
 
-  def self.merge!(parent_id, loser_id)
-    parent = find_by_id parent_id
-    loser = find_by_id loser_id
-    loser.merge_with!(parent)
-  end
+  # not used
+  #def self.merge!(parent_id, loser_id)
+  #  parent = find_by_id parent_id
+  #  loser = find_by_id loser_id
+  #  loser.merge_with!(parent)
+  #end
 
   def initialize(*args)
     super
