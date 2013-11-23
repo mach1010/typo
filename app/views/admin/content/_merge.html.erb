@@ -7,7 +7,7 @@
     
       <label for='merge_with'><%= _("Article ID") %></label>    
       <%= text_field_tag 'merge_with' %>
-      <%= hidden_field_tag 'current_loser', @article.id %>
+      <%= hidden_field :article, :id %>
       
     </div>
   </div>
