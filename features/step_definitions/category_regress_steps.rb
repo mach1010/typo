@@ -3,9 +3,8 @@ When /^I enter a uri for the edit page for "Category" with id "1"/ do
 end
 
 
-When /^I try to follow the broken "Categories" link/ do
-  expect { visit '/admin/categories/new'}.to raise_error(ActiveRecord::RecordNotFound)
-  visit '/admin/categories/edit/1' rescue  save_and_open_page
+When /^Categories/ do
+  expect { click_link 'Categories'}.should_not raise_error(ActiveRecord::RecordNotFound)
 end
 
 When /^I log out/ do

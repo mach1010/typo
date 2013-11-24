@@ -11,12 +11,13 @@ module NavigationHelpers
      
     when /^the view page for "(.*)"/
       "/admin/content/edit/#{Article.find_by_title($1).id}"
-      
+
+    when /^the new categories page/
+      "/admin/categories/new"
+    
     #when /^the logout link/
     #  "Log out »" #Brittle
 
-    when /^the view page for "(.*)"/
-      "/admin/content/edit/#{Article.find_by_title($1).id}"  
 
     else
       begin
