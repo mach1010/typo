@@ -1,16 +1,3 @@
-When /^I enter a uri for the edit page for "Category" with id "1"/ do
-  expect { visit '/admin/categories/edit/1' }.to_not raise_error
-end
-
-
-When /^I try to follow the broken "Categories" link/ do
-  expect { visit '/admin/categories/new'}.to raise_error(ActiveRecord::RecordNotFound)
-  visit '/admin/categories/edit/1' rescue  save_and_open_page
-end
-
-When /^I log out/ do
-  visit '/accounts/logout/'
-end
 
 
 =begin

@@ -18,6 +18,9 @@ module NavigationHelpers
     when /^the view page for "(.*)"/
       "/admin/content/edit/#{Article.find_by_title($1).id}"  
 
+    when /^the new page for "Categories"/
+      "/admin/categories/new"
+
     else
       begin
         page_name =~ /^the (.*) page$/

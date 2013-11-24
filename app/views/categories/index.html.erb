@@ -1,5 +1,5 @@
 <div class='category-excerpt'>
-  <h1 class='page-header'>Categories</h1>
+  <h1 class='page-header'>CATEGORIES INDEX NON-ADMIN</h1>
   <% @categories.each do |cat| %>
     <h2 class='page-header'><%= cat.display_name%></h2>
     <% articles = cat.articles.slice(0, 9)%>
