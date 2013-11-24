@@ -1,4 +1,5 @@
 Feature: Write Articles
+
   is a blog administrator
   In order to share my thoughts with the world
   I want to be able to add articles to my blog
@@ -21,10 +22,11 @@ Feature: Write Articles
   And I am on the admin content page 
 
   Scenario: Merge should be available to admin
-    When I follow "Foo"
-    Then I should be on the view page for "Foo"
-    And  I should see "Lorem Ipsum"
-    And  I should see "Merge Articles"
+    Given I am on the admin content page
+    When  I follow "Foo"
+    Then  I should be on the view page for "Foo"
+    And   I should see "Lorem Ipsum"
+    And   I should see "Merge Articles"
     
   Scenario: Merge should not be available on New page
     When I am on the new article page
@@ -35,6 +37,7 @@ Feature: Write Articles
     And  I fill in "Article ID" with "3"
     And  I press "Merge"
     Then I should be on the admin content page
+    And  I should see "Foo"
     And  I should see "Bar"
     And  I should not see "Baz"
 
@@ -47,4 +50,5 @@ Feature: Write Articles
   Scenario: A non-admin cannot merge two articles
     Given I am on the admin content page
     When  I log out
-    Then  I should not see "Bar"
+    Then  I should see "Successfully logged out"
+    And   I should not see "Bar"

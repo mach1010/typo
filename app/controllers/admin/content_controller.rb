@@ -7,11 +7,20 @@ class Admin::ContentController < Admin::BaseController
 
   cache_sweeper :blog_sweeper
   
+=begin  
   def merge
     @article = Article.find(session[:id])
     @parent_article = Article.find(params[:merge_with])
     @article.merge_with(@parent_article)
     redirect_to admin_content_path
+  end
+=end
+
+  def merge
+    loser = Article.find_by_id params[:article][:id]
+    parent = Article.find_by_id params[:merge_with]
+    loser.merge_with!(parent)
+    redirect_to admin_content_path and return
   end
 
   def auto_complete_for_article_keywords
