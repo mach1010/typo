@@ -12,27 +12,33 @@ describe Admin::CategoriesController do
     request.session = { :user => henri.id }
   end
   
-  
-=begin
-
-Grabbed this from scaffolding but they do it their own way here. Above you can see the admin profile created,
-============================================================================================================
-      describe "GET new" do
-        it "assigns a new admin_category as @category" do
-          valid_sess = {"session_id"=>"5fb129ecd8878bc5062b7a50f62eefde", "user"=>1, "user_id"=>1, "_csrf_token"=>"kUulApncWaxc5M1fQex0JcVjwQOoO4BSYvLzAg4ahgc="}
-          #get :new, {}, {}
-          expect(assigns(:category)).to be_a_new(Admin::Category)
-          #assigns(:category).should be_a_new(Admin::Category)
-        end
-      end
-============================================================================
-And below you can see it adapted with their session and passing empty params.
-I had to roll back the controller temporarily to made sure it failed the old way. So we did jump the gun?
-=end
-  it "test_new" do
-    get :new, {}, request.session
-    expect(assigns(:category)).to be_a_new(Category)
-    #assigns(:category).should be_a_new(Admin::Category) #Admin:: prefix again from scaffold not needed.
+  # see bug category-new-bombs 
+  describe "test_new" do
+    
+    it 'returns a new Category if params are empty' do
+      get :new, {}, request.session
+      expect( assigns :category ).to be_a_new Category
+      expect( assigns :categories ).not_to be_nil
+      expect(response).to render_template("new")
+    end
+    
+    it 'returns a new Category if invalid id given' do
+      cat = Factory( :category, :id => 1, :name => 'Test Ruxpin' )      
+      get :new, {:id => 'hairy eyeball'}, request.session
+      expect( assigns :category ).to be_a_new Category
+      expect( assigns :categories ).not_to be_nil
+      expect(response).to render_template("new")
+    end    
+    
+    it 'goes to edit the Category if params has id and it exists' do
+      cat = Factory( :category, :id => 1, :name => 'Test Ruxpin' )      
+      assert_not_nil Category.find(1)
+      get :new, {:id => 1 }, request.session
+      expect( assigns :category ).not_to be_a_new Category
+      expect( assigns(:category).name ).to eq('Test Ruxpin')
+      expect(response).to render_template("new")
+    end
+    
   end
 
   it "test_index" do
