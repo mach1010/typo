@@ -1,5 +1,6 @@
 require 'spec_helper'
 
+
 describe Admin::CategoriesController do
   render_views
 
@@ -9,6 +10,29 @@ describe Admin::CategoriesController do
     Profile.delete_all
     henri = Factory(:user, :login => 'henri', :profile => Factory(:profile_admin, :label => Profile::ADMIN))
     request.session = { :user => henri.id }
+  end
+  
+  
+=begin
+
+Grabbed this from scaffolding but they do it their own way here. Above you can see the admin profile created,
+============================================================================================================
+      describe "GET new" do
+        it "assigns a new admin_category as @category" do
+          valid_sess = {"session_id"=>"5fb129ecd8878bc5062b7a50f62eefde", "user"=>1, "user_id"=>1, "_csrf_token"=>"kUulApncWaxc5M1fQex0JcVjwQOoO4BSYvLzAg4ahgc="}
+          #get :new, {}, {}
+          expect(assigns(:category)).to be_a_new(Admin::Category)
+          #assigns(:category).should be_a_new(Admin::Category)
+        end
+      end
+============================================================================
+And below you can see it adapted with their session and passing empty params.
+I had to roll back the controller temporarily to made sure it failed the old way. So we did jump the gun?
+=end
+  it "test_new" do
+    get :new, {}, request.session
+    expect(assigns(:category)).to be_a_new(Category)
+    #assigns(:category).should be_a_new(Admin::Category) #Admin:: prefix again from scaffold not needed.
   end
 
   it "test_index" do
