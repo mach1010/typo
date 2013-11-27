@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 
+
 describe Admin::CategoriesController do
   render_views
 
   before(:each) do
     Factory(:blog)
-    #TODO Delete after removing fixtures
     Profile.delete_all
     henri = Factory(:user, :login => 'henri', :profile => Factory(:profile_admin, :label => Profile::ADMIN))
     request.session = { :user => henri.id }
@@ -15,28 +15,31 @@ describe Admin::CategoriesController do
   # see bug category-new-bombs 
   describe "test_new" do
     
-    it 'returns a new Category if params are empty' do
+    def expect_ok( assigns, response )
+      expect( assigns(:categories) ).not_to be_nil
+      expect(response).to render_template(:new)
+    end
+
+    it 'empty id' do
       get :new, {}, request.session
-      expect( assigns :category ).to be_a_new Category
-      expect( assigns :categories ).not_to be_nil
-      expect(response).to render_template("new")
+      expect( assigns(:category) ).to be_a_new Category
+      expect_ok( assigns, response )
     end
     
-    it 'returns a new Category if invalid id given' do
+    it 'invalid id' do
       cat = Factory( :category, :id => 1, :name => 'Test Ruxpin' )      
-      get :new, {:id => 'hairy eyeball'}, request.session
-      expect( assigns :category ).to be_a_new Category
-      expect( assigns :categories ).not_to be_nil
-      expect(response).to render_template("new")
+      get :new, {:id => 'INVALID TEST ID'}, request.session
+      expect( assigns(:category) ).to be_a_new Category
+      expect_ok( assigns, response )
     end    
     
-    it 'goes to edit the Category if params has id and it exists' do
+    it 'existing Category id' do
       cat = Factory( :category, :id => 1, :name => 'Test Ruxpin' )      
       assert_not_nil Category.find(1)
       get :new, {:id => 1 }, request.session
-      expect( assigns :category ).not_to be_a_new Category
       expect( assigns(:category).name ).to eq('Test Ruxpin')
-      expect(response).to render_template("new")
+      expect( assigns(:category) ).not_to be_a_new Category
+      expect_ok( assigns, response )
     end
     
   end
